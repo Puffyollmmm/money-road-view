@@ -1,0 +1,72 @@
+{
+  "name": "money-road",
+  "version": "1.0.0",
+  "description": "Money Road - 钱途眼APP总仓库",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "openapi:cms": "pnpm -F @money-road/app-cms openapi",
+    "openapi:ends": "pnpm -F @money-road/app-ends openapi",
+    "dev:cms": "pnpm -F @money-road/app-cms dev",
+    "dev:view": "pnpm -F @money-road/app-view dev --host",
+    "dev:ends": "pnpm -F @money-road/app-ends dev",
+    "build:cms": "pnpm -F @money-road/app-cms build",
+    "build:view": "pnpm -F @money-road/app-view build",
+    "build:ends": "pnpm -F @money-road/app-ends build",
+    "preview:cms": "pnpm -F @money-road/app-cms preview",
+    "preview:view": "pnpm -F @money-road/app-view preview",
+    "preview:ends": "pnpm -F @money-road/app-ends preview",
+    "lint:cms": "pnpm -F @money-road/app-cms lint",
+    "lint:view": "pnpm -F @money-road/app-view lint",
+    "lint:ends": "pnpm -F @money-road/app-ends lint",
+    "format:cms": "pnpm -F @money-road/app-cms format",
+    "format:view": "pnpm -F @money-road/app-view format",
+    "format:ends": "pnpm -F @money-road/app-ends format",
+    "clean:cms": "pnpm -F @money-road/app-cms clean",
+    "clean:view": "pnpm -F @money-road/app-view clean",
+    "clean:ends": "pnpm -F @money-road/app-ends clean",
+    "test:cms": "pnpm -F @money-road/app-cms test",
+    "test:view": "pnpm -F @money-road/app-view test",
+    "test:ends": "pnpm -F @money-road/app-ends test",
+    "build:all": "pnpm -F @money-road/app-cms build && pnpm -F @money-road/app-view build && pnpm -F @money-road/app-ends build",
+    "lint:all": "pnpm -F @money-road/app-cms lint && pnpm -F @money-road/app-view lint && pnpm -F @money-road/app-ends lint",
+    "format:all": "pnpm -F @money-road/app-cms format && pnpm -F @money-road/app-view format && pnpm -F @money-road/app-ends format",
+    "clean:all": "pnpm -F @money-road/app-cms clean && pnpm -F @money-road/app-view clean && pnpm -F @money-road/app-ends clean",
+    "test:all": "pnpm -F @money-road/app-cms test && pnpm -F @money-road/app-view test && pnpm -F @money-road/app-ends test"
+  },
+  "keywords": [
+    "money-road",
+    "money-road-view",
+    "money-road-api",
+    "money-road-admin"
+  ],
+  "author": "TalexDreamSoul <talexdreamsoul@gmail.com>",
+  "license": "MIT",
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0",
+  "lint-staged": {
+    "*": ""
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "@liaoliaots/nestjs-redis>@nestjs/common": "^10.0.0",
+        "@liaoliaots/nestjs-redis>@nestjs/core": "^10.0.0",
+        "eslint": "^9.2.0"
+      }
+    }
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@umijs/openapi": "^1.13.0",
+    "dayjs": "^1.11.11"
+  },
+  "devDependencies": {
+    "@umijs/plugins": "^4.4.6",
+    "rc-field-form": "^2.7.0",
+    "tsx": "^4.19.3"
+  },
+  "engines": {
+    "node": ">=22.14.0",
+    "pnpm": ">=9"
+  }
+}
