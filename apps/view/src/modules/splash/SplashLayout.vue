@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useFooterNav } from './footer'
+import SplashDynamicIsland from './SplashDynamicIsland.vue'
 
 const { active } = useFooterNav()
 </script>
@@ -14,6 +15,8 @@ const { active } = useFooterNav()
     <div class="SplashLayout-Footer fake-background transition-cubic">
       <slot name="footer" />
     </div>
+
+    <SplashDynamicIsland />
   </div>
 </template>
 
