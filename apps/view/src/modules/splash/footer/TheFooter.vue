@@ -16,12 +16,12 @@ const { active, activeNav, navs } = useFooterNav()
         v-for="(nav, ind) in navs" :id="`footer-nav-item-${ind + 1}`" :key="nav.path" flex flex-col items-center
         :class="{ active: activeNav?.path === nav.path }" @click="router.push(nav.path)"
       >
-        <div class="transition-cubic fake-background nav-icon">
+        <div class="transition-cubic nav-icon">
           <template v-if="nav.icon.startsWith('i-')">
             <div :class="nav.icon" />
           </template>
           <template v-else>
-            <img class="scale-[1.5]" :src="nav.icon">
+            <div class="scale-[0.75]" v-html="nav.icon" />
           </template>
         </div>
         <p class="transition-cubic title">
@@ -32,6 +32,7 @@ const { active, activeNav, navs } = useFooterNav()
 
     <div hidden>
       <div i-carbon-explore />
+      <div i-carbon-add-alt />
       <div i-carbon:user-avatar-filled-alt />
     </div>
   </nav>
@@ -40,25 +41,8 @@ const { active, activeNav, navs } = useFooterNav()
 <style lang="scss">
 .Application-Footer ul li {
   &.active {
-    .title {
-      opacity: 0;
-      transform: translateY(5px);
-    }
-
-    .nav-icon {
-      width: 36px;
-      height: 36px;
-
-      transform: translateY(15px);
-
-      border-radius: 50%;
-      // background-color: var(--el-fill-color);
-      --fake-opacity: 0.25;
-      --fake-color: var(--theme-color-light);
-    }
-
     opacity: 1;
-    color: var(--el-text-color-regular);
+    color: var(--theme-color);
   }
 
   .title {

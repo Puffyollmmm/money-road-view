@@ -70,6 +70,8 @@
     transform: translate(-50%, 50%);
     filter: grayscale(0.5) blur(2px) brightness(120%);
 
+    animation: rotate 20s linear infinite;
+
     .light & {
       opacity: 0.2;
       filter: grayscale(0.2) blur(1px) brightness(110%);
@@ -77,8 +79,6 @@
   }
 
   .dark & {
-
-    // 仅在暗色模式下添加更多的效果
     &::after {
       content: '';
       position: absolute;
@@ -92,6 +92,16 @@
       pointer-events: none;
       z-index: -1;
     }
+  }
+}
+
+@keyframes rotate {
+  from {
+    transform: translate(-50%, 50%) rotate(0deg);
+  }
+
+  to {
+    transform: translate(-50%, 50%) rotate(360deg);
   }
 }
 </style>

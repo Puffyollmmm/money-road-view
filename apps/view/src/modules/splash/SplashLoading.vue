@@ -28,8 +28,8 @@ watch(() => globalSplashState.screenMode.value, () => {
           <img :src="APP_LOGO" alt="Logo" class="logo-bg">
         </div>
         <div class="SplashLoading-Page-Text">
-          <h1>千叶单词</h1>
-          <p>Leave words, Embrace worlds!</p>
+          <h1>塔聚风</h1>
+          <p>有财有料，有你</p>
         </div>
       </div>
       <div flex flex-col items-center class="powered-by">
@@ -111,20 +111,24 @@ watch(() => globalSplashState.screenMode.value, () => {
   img {
     position: absolute;
 
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
   }
 
   .logo-bg {
     z-index: -1;
-    filter: blur(15px);
+    filter: blur(5px) invert(1);
   }
 
   z-index: 1;
   position: relative;
 
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
+}
+
+html.dark .logo-bg {
+  filter: blur(15px) invert(0);
 }
 
 .SplashLoading-Page-Main {
@@ -135,8 +139,6 @@ watch(() => globalSplashState.screenMode.value, () => {
   align-items: center;
 
   h1 {
-    margin-top: -1rem;
-
     font-size: 2rem;
     font-weight: bold;
     text-align: center;

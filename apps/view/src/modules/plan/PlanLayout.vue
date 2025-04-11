@@ -4,16 +4,12 @@ import WithPage from '~/components/page/WithPage.vue'
 
 <template>
   <WithPage class="PlanLayout">
-    <div class="PlanLayout-Header transition-cubic">
-      <slot name="header" />
-    </div>
+    <template #bg>
+      <div class="PlanLayout-Header transition-cubic" />
+    </template>
 
     <div class="PlanLayout-Main">
-      <slot name="main" />
-    </div>
-
-    <div class="PlanLayout-Cover transition-cubic absolute-layout z-0">
-      <slot name="cover" />
+      <slot />
     </div>
   </WithPage>
 </template>
@@ -23,32 +19,26 @@ import WithPage from '~/components/page/WithPage.vue'
   position: relative;
 
   width: 100%;
+  height: 100%;
+
+  top: 1rem;
+
+  overflow-y: scroll;
 }
 
 .PlanLayout {
   &-Header {
     z-index: 1;
-    position: sticky;
     display: flex;
-    padding: 0.5rem 1.5rem;
 
     top: 0;
-
-    height: 64px;
+    height: calc(var(--header-height) + 1rem);
 
     justify-content: space-between;
-
-    // .statusbar & {
-    //   padding-top: calc(1rem + 24px);
-
-    //   height: 88px;
-    // }
+    background-color: var(--theme-color);
   }
   position: relative;
 
-  height: 100%;
-
-  overflow-y: scroll;
   background-color: var(--el-bg-color);
 }
 </style>

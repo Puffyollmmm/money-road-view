@@ -1,6 +1,5 @@
 <script setup lang="ts" generic="T extends any, O extends any">
 import Plan from '~/modules/plan/index.vue'
-import PlanCover from '~/modules/plan/PlanCover.vue'
 
 defineOptions({
   name: 'IndexPage',
@@ -9,15 +8,7 @@ defineOptions({
 
 <template>
   <Plan>
-    <template #cover>
-      <PlanCover />
-    </template>
-
-    <template #main>
-      <div id="sign-info" mx-auto class="IndexPage-Card transition-cubic z-1">
-        <WordSignInfo />
-      </div>
-    </template>
+  1
   </Plan>
 </template>
 

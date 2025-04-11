@@ -79,6 +79,16 @@ defineProps<{
       opacity: 0;
     }
   }
+
+  .screenShot & {
+    padding: 12px 40px !important;
+    padding-top: 26px !important;
+
+    height: 54px;
+    .SplashStatusbar-DynamicIsland {
+      opacity: 0;
+    }
+  }
 }
 
 .SplashStatusbar-DynamicIsland {

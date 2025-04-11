@@ -33,25 +33,8 @@ const tools = [
     <div class="SplashMenu-Left w-[30%] justify-start flex items-center gap-4">
       <div class="SplashMenu-Icon flex items-center gap-2">
         <Logo class="h-6 w-6" />
-        <span class="text-14px font-medium">Leaf<b>Developer</b></span>
+        <span class="text-14px font-medium">Consume<b>Developer</b></span>
       </div>
-
-      <ElDropdown trigger="click">
-        <div class="menu-trigger flex cursor-pointer items-center gap-1">
-          <Icon name="menu" class="text-gray-600" />
-          <span class="text-sm">菜单</span>
-        </div>
-        <template #dropdown>
-          <ElDropdownMenu>
-            <ElDropdownItem v-for="tool in tools" :key="tool.label">
-              <div class="flex items-center gap-2">
-                <div :class="tool.icon" />
-                <span>{{ tool.label }}</span>
-              </div>
-            </ElDropdownItem>
-          </ElDropdownMenu>
-        </template>
-      </ElDropdown>
     </div>
 
     <div class="SplashMenu-Center w-[30%] justify-center flex items-center gap-4">
@@ -91,22 +74,6 @@ const tools = [
 
     <div class="SplashMenu-Right w-[30%] justify-end flex items-center gap-3">
       <DarkModeSwitch />
-
-      <div class="tools-bar flex items-center gap-2">
-        <!-- <ElTooltip
-          v-for="(tool, index) in tools"
-          :key="tool.label"
-          :content="tool.label"
-        >
-          <div
-            class="tool-item cursor-pointer rounded p-1"
-            :class="{ 'bg-gray-100': activeToolIndex === index }"
-            @click="activeToolIndex = index"
-          >
-            <Icon :name="tool.icon" />
-          </div>
-        </ElTooltip> -->
-      </div>
     </div>
   </div>
 </template>

@@ -6,8 +6,10 @@ const props = defineProps<{
   src?: string
 }>()
 
+const defaultAvatar = 'http://q.qlogo.cn/headimg_dl?dst_uin=3535693649&spec=640&img_type=jpg' || '/avatar.jpg'
+
 const avatar = computed(() => {
-  return props.src || (globalAuthStorage.value.user.userAvatar) || '/avatar.jpg'
+  return props.src || (globalAuthStorage.value.user.userAvatar) || defaultAvatar
 })
 </script>
 
@@ -18,7 +20,7 @@ const avatar = computed(() => {
     </template>
 
     <template #error>
-      <img src="/avatar.jpg" />
+      <img :src="defaultAvatar" />
     </template>
   </UseImage>
 </template>

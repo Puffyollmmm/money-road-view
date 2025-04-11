@@ -1,197 +1,194 @@
 <script setup lang="ts">
 import { useRequest } from 'alova/client'
+import WithPage from '~/components/page/WithPage.vue'
 import Apis from '~/composables/api/clients'
 import { globalAuthStorage } from '.'
 
-const options = reactive({
-  identifier: '',
-  certificate: '',
-})
-
-const { send, loading } = useRequest(() => Apis.userController.userLoginTokenUsingPOST({
-  data: {
-    userAccount: options.identifier,
-    userPassword: options.certificate,
-  },
-  meta: {
-    authRole: 'login',
-  },
-}), {
-  immediate: false,
-})
+// const { send, loading } = useRequest(() => Apis.userController.userLoginTokenUsingPOST({
+//   data: {
+//     userAccount: 'auto_login',
+//     userPassword: 'auto_login',
+//   },
+//   meta: {
+//     authRole: 'login',
+//   },
+// }), {
+//   immediate: false,
+// })
 
 async function handleAuth(event: Event) {
   event.preventDefault()
 
-  if (!options.identifier || !options.certificate)
-    return
-
-  await send()
+  globalAuthStorage.value.isLogin = true
 }
 </script>
 
 <template>
-  <div v-loading="loading" class="AuthMain h-full w-full">
-    <div class="AuthMain-Inner fake-background">
-      <h1 class="title">
-        登录
-      </h1>
-      <form class="login-form">
-        <div class="input-group">
-          <input id="username" v-model="options.identifier" type="text" name="username" required>
-          <label for="username">用户名</label>
-          <div class="input-line" />
+  <WithPage v-loading="loading" class="AuthMain h-full w-full">
+    <div class="login-container">
+      <div class="logo-container">
+        <div class="logo">
+          <Logo />
         </div>
-        <div class="input-group">
-          <input id="password" v-model="options.certificate" type="password" name="password" required>
-          <label for="password">密码</label>
-          <div class="input-line" />
-        </div>
-        <button type="submit" class="submit-btn" @click="handleAuth">
+        <h2 class="app-name">塔聚风 - 记账消费</h2>
+      </div>
+
+      <div mt-auto w-full>
+        <button v-wave type="submit" class="submit-btn" @click="handleAuth">
           登录
         </button>
-      </form>
-      <div class="agreement-text">
-        <p>
-          未注册账号会自动注册
-        </p>
-        <p>
-          登录即代表你同意
-          <a href="https://protocol.quotawish.com" class="agreement-link">用户协议</a>
-        </p>
+
+        <div class="agreement-text">
+          <p>未注册账号会自动注册</p>
+          <p>登录即代表你同意 <a href="https://protocol.quotawish.com" class="agreement-link">用户协议</a></p>
+        </div>
       </div>
     </div>
-  </div>
+  </WithPage>
 </template>
 
 <style lang="scss" scoped>
 .AuthMain {
+  --auth-primary: #1976d2;
+  --auth-primary-dark: #0d47a1;
+  --auth-secondary: #2f80ed;
+  --auth-bg-light: #e3f2fd;
+
+  @media (prefers-color-scheme: dark) {
+    --auth-primary: #2196f3;
+    --auth-primary-dark: #1976d2;
+    --auth-secondary: #42a5f5;
+    --auth-bg-light: #0a2744;
+  }
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100%;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--auth-bg-light) 0%, var(--auth-primary) 100%);
+    opacity: 0.9;
+    z-index: -2;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    right: -50%;
+    bottom: -50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
+    opacity: 0.2;
+    z-index: -1;
+    animation: moveGradient 15s ease infinite;
+  }
+}
+
+@keyframes moveGradient {
+  0% {
+    transform: translate(0%, 0%) rotate(0deg);
+  }
+  50% {
+    transform: translate(10%, 10%) rotate(180deg);
+  }
+  100% {
+    transform: translate(0%, 0%) rotate(360deg);
+  }
+}
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  padding: 3rem;
+  width: 100%;
+}
+
+.logo-container {
+  margin-top: 20%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo {
+  width: 80px;
+  height: 80px;
+  background-color: white;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  // background: rgba(255, 255, 255, 0.05);
-
-  &-Inner {
-    padding: 2rem 2.5rem;
-    width: 100%;
-    max-width: 400px;
-    --fake-opacity: 0.85;
-    --fake-color: var(--el-bg-color);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(18px) saturate(180%);
-  }
-}
-
-.title {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: var(--theme-color-primary);
-  margin-bottom: 2rem;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.input-group {
-  position: relative;
+  color: var(--auth-primary);
+  font-size: 10rem;
+  font-weight: bold;
   margin-bottom: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
 
-  input {
-    width: 100%;
-    padding: 0.8rem 0;
-    font-size: 1rem;
-    border: none;
-    background: transparent;
-    outline: none;
-    color: var(--theme-color-primary);
-
-    &:focus + label,
-    &:not(:placeholder-shown) + label {
-      transform: translateY(-1.5rem) scale(0.85);
-      color: var(--theme-color-primary);
-    }
-
-    &:focus ~ .input-line::after {
-      transform: scaleX(1);
-    }
-  }
-
-  label {
-    position: absolute;
-    left: 0;
-    top: 0.8rem;
-    color: #7f8c8d;
-    transform-origin: 0 0;
-    transition:
-      transform 0.3s ease,
-      color 0.3s ease;
-    pointer-events: none;
-
-    font-size: 18px;
-  }
-
-  .input-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: #e0e0e0;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: var(--theme-color-primary);
-      transform: scaleX(0);
-      transition: transform 0.3s ease;
-    }
-  }
+.app-name {
+  font-size: 1.5rem;
+  color: white;
+  font-weight: 600;
+  margin: 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .submit-btn {
-  margin-top: 1rem;
-  padding: 0.8rem;
-  font-size: 1rem;
-  color: white;
-  background: var(--theme-color-primary);
+  width: 100%;
+  padding: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--auth-primary);
+  background: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
-
-  &:hover {
-    background: #2980b9;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
-  }
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: auto;
+  margin-bottom: 0.5rem;
 
   &:active {
     transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 }
 
 .agreement-text {
-  margin-top: 1.5rem;
-  font-size: 0.9rem;
-  color: #7f8c8d;
+  margin-top: auto;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  text-align: center;
+
+  p {
+    margin: 5px 0;
+  }
 }
 
 .agreement-link {
-  color: #3498db;
+  color: white;
   text-decoration: none;
+  font-weight: 500;
   transition: color 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 
   &:hover {
-    color: #2980b9;
-    text-decoration: underline;
+    border-bottom-color: white;
   }
 }
 </style>

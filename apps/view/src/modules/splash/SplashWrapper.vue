@@ -55,11 +55,15 @@ const modeClass = computed(() => {
 
   return currentMock.value?.value
 })
+
+const isScreenShot = computed(() => {
+  return currentMock.value?.value === 'screenShot'
+})
 </script>
 
 <template>
   <!-- 根据传入的素材进行裁切视图 - 如果没有素材传入用代码裁切 -->
-  <div ref="dom" :class="{ empty: !currentMock?.mask }" class="SplashWrapper">
+  <div ref="dom" :class="{ empty: !currentMock?.mask, screenShot: isScreenShot }" class="SplashWrapper">
     <div :class="[modeClass]" class="SplashWrapper-Clip absolute-layout">
       <slot />
     </div>
@@ -75,6 +79,12 @@ const modeClass = computed(() => {
   box-shadow: var(--el-box-shadow);
   border-radius: 55px !important;
   border: 5px solid var(--el-text-color-primary);
+
+  &.screenShot {
+    border-radius: 0 !important;
+    border-color: red !important;
+    box-shadow: none !important;
+  }
 }
 
 .SplashWrapper {
@@ -98,6 +108,10 @@ const modeClass = computed(() => {
 
     border-radius: 48px !important;
     overflow: hidden !important;
+
+    &.screenShot {
+      border-radius: 0 !important;
+    }
   }
 }
 
@@ -106,6 +120,7 @@ const modeClass = computed(() => {
     &::before {
       display: none;
     }
+
     width: 100% !important;
     height: 100% !important;
 

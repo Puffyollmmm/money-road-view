@@ -3,11 +3,7 @@ import { useRequest } from 'alova/client'
 import { toast, Toaster } from 'vue-sonner'
 import Auth from '~/modules/auth/index.vue'
 import Core from '~/modules/core/index.vue'
-import DeveloperFloatingBall from '~/modules/develop/index.vue'
 import Splash from '~/modules/splash/index.vue'
-import { type LeafDictStorage, ModeType } from '~/modules/words'
-import { modeManager } from '~/modules/words/mode'
-import { ComprehensiveMode } from '~/modules/words/mode/comprehensive'
 // import { DictWordMode } from '~/modules/words/mode/dict-word'
 // import { PunchMode } from '~/modules/words/mode/punch'
 // import { SoundMode } from '~/modules/words/mode/sound'
@@ -18,11 +14,6 @@ import { AuthSuccessEvent } from './composables/event/auth'
 import { ToastEvent } from './composables/event/toast-event'
 import { useBaseRouteStore } from './composables/store/useRouteStore'
 import { globalAuthStorage, initAuthModule } from './modules/auth'
-
-modeManager.set(ModeType.COMPREHENSIVE, (dictionaryStorage: LeafDictStorage) => new ComprehensiveMode(dictionaryStorage))
-// modeManager.set(ModeType.PUNCH, (dictionaryStorage: DictStorage) => new PunchMode(dictionaryStorage))
-// modeManager.set(ModeType.LISTENING, (dictionaryStorage: DictStorage) => new SoundMode(dictionaryStorage))
-// modeManager.set(ModeType.READING, (dictionaryStorage: DictStorage) => new DictWordMode(dictionaryStorage))
 
 initApi()
 initAuthModule()
@@ -57,17 +48,17 @@ eventBus.registerListener(ToastEvent, {
   },
 })
 
-const { send: refreshUserData } = useRequest(() => Apis.userController.getLoginUserUsingGET(), {
-  immediate: false,
-})
+// const { send: refreshUserData } = useRequest(() => Apis.userController.getLoginUserUsingGET(), {
+//   immediate: false,
+// })
 
-eventBus.registerListener(AuthSuccessEvent, {
-  async handleEvent() {
-    const res = await refreshUserData()
+// eventBus.registerListener(AuthSuccessEvent, {
+//   async handleEvent() {
+//     const res = await refreshUserData()
 
-    globalAuthStorage.value.user = res.data
-  },
-})
+//     globalAuthStorage.value.user = res.data
+//   },
+// })
 
 router.beforeEach((to, from) => {
   const toDepth = routes.findIndex(v => v.path === to.path)
@@ -119,7 +110,6 @@ router.beforeEach((to, from) => {
 
         <Auth />
         <Core />
-        <DeveloperFloatingBall />
         <Toaster mt-8 :theme="theme" richColors position="top-center" />
 
         <!-- <div class="absolute-layout bottom-0 left-0 w-full z-1000 h-10 bg-red-500">

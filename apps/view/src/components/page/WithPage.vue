@@ -7,7 +7,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div :class="{ 'adapt': adapt }" class="WithPage">
+  <div :class="{ adapt }" class="WithPage">
     <div class="WithPage-Background absolute-layout -z-1">
       <slot name="bg" />
     </div>
@@ -23,13 +23,16 @@ withDefaults(defineProps<{
   height: 100%;
 
   overflow: hidden;
+  --header-height: 44px;
 
   .statusbar &.adapt {
     padding-top: 44px;
+    --header-height: 44px;
   }
 
   .statusbar .builder &.adapt {
     padding-top: 44px;
+    --header-height: 44px;
   }
 
   .footerVisible & {
@@ -42,6 +45,7 @@ withDefaults(defineProps<{
 
   .statusbar .iPhone16 &.adapt {
     padding-top: 44px;
+    --header-height: 44px;
   }
 }
 </style>

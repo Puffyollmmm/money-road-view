@@ -3,7 +3,7 @@
 
 <template>
   <div class="LogoContainer">
-    <img src="/logo.svg">
+    <img src="/logo.png">
   </div>
 </template>
 
@@ -28,8 +28,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 32px;
-  height: 32px;
+  width: 1em;
+  height: 1em;
 
   border-radius: 12px;
   // box-shadow: 0 0 11px 2px #3ab8fd;

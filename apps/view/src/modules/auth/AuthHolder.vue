@@ -20,7 +20,7 @@ import { globalAuthStorage } from '.'
   z-index: 100;
 
   border-radius: 18px;
-  transform: translateY(120%) scale(0.8);
+  transform: translateY(120%) scale(0.95);
   background-color: var(--el-bg-color);
 
   transition-duration: 0.75s;
