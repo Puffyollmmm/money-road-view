@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import OutCome from './dynamic/OutCome.vue'
+import InCome from './dynamic/InCome.vue'
 </script>
 
 <template>
@@ -10,7 +11,8 @@ import OutCome from './dynamic/OutCome.vue'
       </div> -->
 
       <!-- <slot /> -->
-      <OutCome :amount="100" category="餐饮" :date="new Date()" />
+      <!-- <OutCome :amount="100" category="餐饮" :date="new Date()" /> -->
+      <InCome :amount="7120" category="工资" :date="new Date()" />
     </div>
   </div>
 </template>

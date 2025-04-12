@@ -3,8 +3,10 @@ import { showDialog, showToast } from 'vant'
 import { computed, onMounted, ref } from 'vue'
 import { useRouter } from "vue-router"
 import TouchDialog from '~/components/dialog/TouchDialog.vue'
+import AiAssistantPanel from './components/AiAssistantPanel.vue'
 import BillAddPanel from './components/BillAddPanel.vue'
 import BillHeader from './components/BillHeader.vue'
+import BillImportPanel from './components/BillImportPanel.vue'
 import BillList from './components/BillList.vue'
 import DataOverview from './components/DataOverview.vue'
 
@@ -32,7 +34,7 @@ const expenseCategories = [
   { name: '交通', icon: 'i-carbon:bus', color: ['#20DF9F', '#13D77F'] },
   { name: '娱乐', icon: 'i-carbon:game-console', color: ['#FFA9E8', '#FD82D0'] },
   { name: '居家', icon: 'i-carbon:home', color: ['#FEAA06', '#FF7C01'] },
-  { name: '医疗', icon: 'i-carbon:medicine', color: ['#FE4794', '#FF4B50'] },
+  { name: '医疗', icon: 'i-carbon:health-cross', color: ['#FE4794', '#FF4B50'] },
   { name: '教育', icon: 'i-carbon:book', color: ['#0DB2B3', '#0B7B8A'] },
   { name: '旅行', icon: 'i-carbon:airport-01', color: ['#FE0000', '#F30102'] },
   { name: '社交', icon: 'i-carbon:group', color: ['#0FDEFE', '#00B4FE'] },
@@ -52,9 +54,9 @@ const bills = ref<BillItem[]>([]);
 const currentDate = ref(new Date().toISOString().split('T')[0]);
 const selectedMonth = ref(new Date().toISOString().substring(0, 7));
 const showAddPanel = ref(false);
+const showImportPanel = ref(false);
 const showDataOverview = ref(false);
 const showAiAssistant = ref(false);
-const aiSuggestion = ref('');
 
 // 计算属性：本月收入总额
 const monthlyIncome = computed(() => {
@@ -116,6 +118,31 @@ function addBill(billData: { type: 'income' | 'expense'; category: string; amoun
   showToast('添加成功');
 }
 
+// 导入账单
+function importBills(importedBills: Array<{ type: 'income' | 'expense'; category: string; amount: number; date: string; note: string; source: string }>) {
+  // 将每个导入的账单添加到账单列表
+  for (const billData of importedBills) {
+    const newBill: BillItem = {
+      id: Date.now().toString() + Math.random().toString(36).substring(2, 10),
+      type: billData.type,
+      category: billData.category,
+      amount: billData.amount,
+      date: billData.date,
+      note: billData.note ? `${billData.note} (来自${billData.source})` : `来自${billData.source}`,
+    };
+
+    bills.value.push(newBill);
+  }
+
+  saveBills();
+}
+
+// 打开导入面板
+function openImportPanel(): void {
+  showAddPanel.value = false;
+  showImportPanel.value = true;
+}
+
 // 删除账单
 function deleteBill(id: string) {
   showDialog({
@@ -161,28 +188,7 @@ function changeMonth(delta: number) {
 
 // 生成AI消费建议
 function generateAiSuggestions() {
-  // 这里可以接入实际的AI接口，现在用模拟数据
-  const categories = filteredBills.value
-    .filter(bill => bill.type === 'expense')
-    .reduce((acc, bill) => {
-      if (!acc[bill.category]) {
-        acc[bill.category] = 0;
-      }
-      acc[bill.category] += bill.amount;
-      return acc;
-    }, {} as Record<string, number>);
-
-  const sortedCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
-
-  if (sortedCategories.length > 0) {
-    const topCategory = sortedCategories[0][0];
-    const topAmount = sortedCategories[0][1];
-
-    aiSuggestion.value = `本月您在"${topCategory}"上花费最多，共计¥${topAmount.toFixed(2)}。建议适当控制该类支出，每月可节省约¥${(topAmount * 0.2).toFixed(2)}。`;
-  } else {
-    aiSuggestion.value = '暂无足够数据生成消费建议，请继续记录您的支出。';
-  }
-
+  // 直接打开AI助手面板
   showAiAssistant.value = true;
 }
 
@@ -249,6 +255,13 @@ const tabbarItems = [
       :expenseCategories="expenseCategories"
       :incomeCategories="incomeCategories"
       @addBill="addBill"
+      @openImportPanel="openImportPanel"
+    />
+
+    <!-- 导入账单面板 -->
+    <BillImportPanel
+      v-model:visible="showImportPanel"
+      @importBill="importBills"
     />
 
     <!-- 数据总览面板 -->
@@ -260,22 +273,14 @@ const tabbarItems = [
       :monthlyExpense="monthlyExpense"
     />
 
-    <!-- AI助手弹窗 -->
-    <TouchDialog v-model="showAiAssistant" title="智能理财助手">
-      <template #Main>
-        <div class="ai-assistant">
-          <div class="ai-icon">
-            <div i-carbon-ai-status class="pulse"></div>
-          </div>
-          <div class="ai-message">
-            {{ aiSuggestion }}
-          </div>
-          <div class="ai-actions">
-            <button class="ai-button" @click="showAiAssistant = false">知道了</button>
-          </div>
-        </div>
-      </template>
-    </TouchDialog>
+    <!-- AI助手面板 -->
+    <AiAssistantPanel
+      v-model:visible="showAiAssistant"
+      :bills="filteredBills"
+      :selectedMonth="selectedMonth"
+      :monthlyIncome="monthlyIncome"
+      :monthlyExpense="monthlyExpense"
+    />
   </WithPage>
 </template>
 

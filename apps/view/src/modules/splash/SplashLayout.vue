@@ -16,7 +16,7 @@ const { active } = useFooterNav()
       <slot name="footer" />
     </div>
 
-    <SplashDynamicIsland />
+    <!-- <SplashDynamicIsland /> -->
   </div>
 </template>
 
