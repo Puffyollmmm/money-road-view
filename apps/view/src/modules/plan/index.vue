@@ -6,7 +6,7 @@ const router = useRouter()
 const _router = router // 避免未使用变量的警告
 
 // 定义主题色变量
-const themeColor = "var(--el-color-primary)"
+const _themeColor = "var(--el-color-primary)" // 使用下划线前缀避免未使用变量的警告
 
 // 金融资产数据
 const myAsset = ref("0.00")
@@ -38,6 +38,34 @@ const weatherForecast = [
   { day: '9日', icon: 'i-carbon-sun', temp: '' },
   { day: '10日', icon: 'i-carbon-sun', temp: '' },
 ]
+
+// 推荐广告数据
+const adItems = ref([
+  {
+    id: 1,
+    title: '智能定投助手',
+    desc: '基于AI分析的定投策略',
+    tag: '智能理财',
+    isAd: true,
+    image: 'https://picsum.photos/120/80?random=1'
+  },
+  {
+    id: 2,
+    title: '低风险理财产品精选',
+    desc: '年化收益4.5%起',
+    tag: '稳健投资',
+    isAd: false,
+    image: 'https://picsum.photos/120/80?random=2'
+  },
+  {
+    id: 3,
+    title: '个人消费分析报告',
+    desc: '让您的财务一目了然',
+    tag: '财务管理',
+    isAd: true,
+    image: 'https://picsum.photos/120/80?random=3'
+  }
+])
 </script>
 
 <template>
@@ -70,7 +98,7 @@ const weatherForecast = [
       <div v-for="(category, index) in financeCategories" :key="index" class="flex flex-col items-center mb-4"
         v-show="index < 10">
         <div class="w-10 h-10 mb-2 flex items-center justify-center rounded-full bg-primary/10 dark:bg-primary/15">
-          <div :class="[category.icon, 'text-xl text-primary']"></div>
+          <div :class="category.icon" class="text-xl text-primary"></div>
         </div>
         <div class="text-xs text-text-primary dark:text-dark-text-primary">{{ category.name }}</div>
       </div>
@@ -84,7 +112,7 @@ const weatherForecast = [
       </div>
       <div class="flex justify-between">
         <div v-for="(weather, index) in weatherForecast" :key="index" class="flex flex-col items-center">
-          <div :class="[weather.icon, 'text-xl text-warning mb-1']"></div>
+          <div :class="weather.icon" class="text-xl text-warning mb-1"></div>
           <div class="text-xs text-text-regular dark:text-dark-text-regular">{{ weather.day }}</div>
         </div>
       </div>
@@ -131,6 +159,32 @@ const weatherForecast = [
             </div>
           </div>
           <button class="w-full text-center text-primary font-bold py-2">前往提问</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 推荐内容与自然化广告区域 -->
+    <div class="mx-4 my-3 p-4 rounded-lg bg-white dark:bg-dark-200 shadow-sm">
+      <div class="flex justify-between items-center mb-3">
+        <span class="font-bold text-text-primary dark:text-dark-text-primary">精选推荐</span>
+        <div class="text-xs text-text-regular dark:text-dark-text-regular">更多内容</div>
+      </div>
+
+      <div v-for="item in adItems" :key="item.id" class="mb-4 last:mb-0">
+        <div class="flex">
+          <div class="mr-3 flex-shrink-0">
+            <img :src="item.image" class="w-30 h-20 rounded-lg object-cover" />
+          </div>
+          <div class="flex-1">
+            <div class="flex items-center">
+              <div class="text-sm font-bold text-text-primary dark:text-dark-text-primary">{{ item.title }}</div>
+              <div v-if="item.isAd" class="ml-1 text-2xs px-1 py-0.5 border border-gray-300 dark:border-gray-600 rounded text-text-regular dark:text-dark-text-regular">广告</div>
+            </div>
+            <div class="text-xs text-text-regular dark:text-dark-text-regular mt-1">{{ item.desc }}</div>
+            <div class="mt-2 flex items-center">
+              <span class="text-2xs px-1.5 py-0.5 bg-primary/10 dark:bg-primary/15 text-primary rounded-full">{{ item.tag }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -192,5 +246,14 @@ const weatherForecast = [
 
 .dark .bg-dark-300 {
   background-color: var(--el-fill-color-darker);
+}
+
+/* 新增样式 */
+.text-2xs {
+  font-size: 0.65rem;
+}
+
+.w-30 {
+  width: 7.5rem;
 }
 </style>

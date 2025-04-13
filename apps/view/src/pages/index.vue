@@ -8,7 +8,6 @@ defineOptions({
 
 <template>
   <Plan>
-  1
   </Plan>
 </template>
 
