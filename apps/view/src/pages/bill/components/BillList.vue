@@ -34,8 +34,8 @@ function formatDate(dateString: string): string {
 
 // 计算日期总额
 function calculateDailyTotal(bills: BillItem[]): string {
-  const income = bills.filter(b => b.type === 'income').reduce((sum, b) => sum + b.amount, 0);
-  const expense = bills.filter(b => b.type === 'expense').reduce((sum, b) => sum + b.amount, 0);
+  const income = bills.filter(b => b.type === 'income').reduce((sum, b) => sum + (b.amount || 0), 0);
+  const expense = bills.filter(b => b.type === 'expense').reduce((sum, b) => sum + (b.amount || 0), 0);
 
   if (income > 0 && expense > 0) {
     return `收入: ${income.toFixed(2)} 支出: ${expense.toFixed(2)}`;
@@ -75,7 +75,7 @@ function calculateDailyTotal(bills: BillItem[]): string {
             </div>
           </div>
           <div class="amount" :class="bill.type">
-            {{ bill.type === 'income' ? '+' : '-' }}{{ bill.amount.toFixed(2) }}
+            {{ bill.type === 'income' ? '+' : '-' }}{{ (bill.amount || 0).toFixed(2) }}
           </div>
         </div>
       </div>
