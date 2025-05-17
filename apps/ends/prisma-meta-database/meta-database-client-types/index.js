@@ -161,7 +161,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "E:\\Workspace\\Projects\\Quota\\money-road\\money-road-view\\apps\\ends\\prisma-meta-database\\meta-database-client-types",
+      "value": "D:\\Workspace\\money-road-view\\apps\\ends\\prisma-meta-database\\meta-database-client-types",
       "fromEnvVar": null
     },
     "config": {
@@ -175,12 +175,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "E:\\Workspace\\Projects\\Quota\\money-road\\money-road-view\\apps\\ends\\prisma-meta-database\\schema.prisma",
+    "sourceFilePath": "D:\\Workspace\\money-road-view\\apps\\ends\\prisma-meta-database\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "..",
   "clientVersion": "6.8.2",
