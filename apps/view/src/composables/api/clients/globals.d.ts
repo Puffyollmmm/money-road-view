@@ -255,6 +255,28 @@ export type CategoryQueryRequest = {
   sortField?: string;
   sortOrder?: string;
 };
+export type SseEmitter = {
+  timeout?: number;
+};
+export type ChatMessage = {
+  content?: string;
+  content_type?: string;
+  role?: string;
+};
+export type CreateChatRequest = {
+  additionalMessages?: ChatMessage[];
+  botId?: string;
+};
+export type Flowable_WorkflowEvent_ = object;
+export type BaseResponse_Flowable_WorkflowEvent_ = {
+  code?: number;
+  /**
+   * Flowable«WorkflowEvent»
+   * ---
+   */
+  data?: Flowable_WorkflowEvent_;
+  message?: string;
+};
 export type BaseResponse_List_Category_ = {
   code?: number;
   data?: Category[];
@@ -889,9 +911,6 @@ export type BaseResponse_string_ = {
   data?: string;
   message?: string;
 };
-export type SseEmitter = {
-  timeout?: number;
-};
 export type MediaCreatorAddRequest = {
   mediaType?: 'LIVE' | 'IMAGE' | 'VIDEO' | 'AUDIO' | 'STATIC_VIDEO';
   wordId?: number;
@@ -1228,10 +1247,6 @@ export type BaseResponse_Page_UserVO_ = {
   data?: Page_UserVO_;
   message?: string;
 };
-export type UserLoginRequest = {
-  userAccount?: string;
-  userPassword?: string;
-};
 export type SaTokenInfo = {
   isLogin?: boolean;
   loginDeviceType?: string;
@@ -1266,6 +1281,13 @@ export type BaseResponse_AuthUserVO_ = {
   data?: AuthUserVO;
   message?: string;
 };
+export type UserLoginRequest = {
+  deviceId?: string;
+  deviceType?: string;
+  platform?: string;
+  userAccount?: string;
+  userPassword?: string;
+};
 export type UserRegisterRequest = {
   checkPassword?: string;
   userAccount?: string;
@@ -1282,6 +1304,19 @@ export type UserUpdateMyRequest = {
   userAvatar?: string;
   userName?: string;
   userProfile?: string;
+};
+export type UserConfigVO = {
+  privateConfig?: object;
+  publicConfig?: object;
+};
+export type BaseResponse_UserConfigVO_ = {
+  code?: number;
+  /**
+   * UserConfigVO
+   * ---
+   */
+  data?: UserConfigVO;
+  message?: string;
 };
 export type WordStatusChangeVO = {
   comment?: string;
@@ -2092,6 +2127,114 @@ declare global {
       >(
         config: Config
       ): Alova2Method<BaseResponse_boolean_, 'categoryController.updateCategoryUsingPOST', Config>;
+    };
+    cozeController: {
+      /**
+       * ---
+       *
+       * [POST] createChat
+       *
+       * **path:** /api/coze/createChat
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // userId
+       *   // [required]
+       *   userId: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   additionalMessages?: Array<{
+       *     content?: string
+       *     content_type?: string
+       *     role?: string
+       *   }>
+       *   botId?: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   timeout?: number
+       * }
+       * ```
+       */
+      createChatUsingPOST<
+        Config extends Alova2MethodConfig<SseEmitter> & {
+          params: {
+            /**
+             * userId
+             * [required]
+             */
+            userId: string;
+          };
+          data: CreateChatRequest;
+        }
+      >(
+        config: Config
+      ): Alova2Method<SseEmitter, 'cozeController.createChatUsingPOST', Config>;
+      /**
+       * ---
+       *
+       * [POST] startWorkflow
+       *
+       * **path:** /api/coze/startWorkflow
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // workflowId
+       *   // [required]
+       *   workflowId: string
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = object
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   // [title] Flowable«WorkflowEvent»
+       *   data?: object
+       *   message?: string
+       * }
+       * ```
+       */
+      startWorkflowUsingPOST<
+        Config extends Alova2MethodConfig<BaseResponse_Flowable_WorkflowEvent_> & {
+          params: {
+            /**
+             * workflowId
+             * [required]
+             */
+            workflowId: string;
+          };
+          data: object;
+        }
+      >(
+        config: Config
+      ): Alova2Method<BaseResponse_Flowable_WorkflowEvent_, 'cozeController.startWorkflowUsingPOST', Config>;
     };
     dictionaryCategoryController: {
       /**
@@ -5740,6 +5883,23 @@ declare global {
       /**
        * ---
        *
+       * [GET] getDailyQuote
+       *
+       * **path:** /api/user/dailyquote
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = string
+       * ```
+       */
+      getDailyQuoteUsingGET<Config extends Alova2MethodConfig<string>>(
+        config?: Config
+      ): Alova2Method<string, 'userController.getDailyQuoteUsingGET', Config>;
+      /**
+       * ---
+       *
        * [POST] deleteUser
        *
        * **path:** /api/user/delete
@@ -6042,50 +6202,6 @@ declare global {
       /**
        * ---
        *
-       * [POST] userLogin
-       *
-       * **path:** /api/user/login
-       *
-       * ---
-       *
-       * **RequestBody**
-       * ```ts
-       * type RequestBody = {
-       *   userAccount?: string
-       *   userPassword?: string
-       * }
-       * ```
-       *
-       * ---
-       *
-       * **Response**
-       * ```ts
-       * type Response = {
-       *   code?: number
-       *   // [title] LoginUserVO
-       *   data?: {
-       *     createTime?: string
-       *     id?: number
-       *     updateTime?: string
-       *     userAvatar?: string
-       *     userName?: string
-       *     userProfile?: string
-       *     userRole?: string
-       *   }
-       *   message?: string
-       * }
-       * ```
-       */
-      userLoginUsingPOST<
-        Config extends Alova2MethodConfig<BaseResponse_LoginUserVO_> & {
-          data: UserLoginRequest;
-        }
-      >(
-        config: Config
-      ): Alova2Method<BaseResponse_LoginUserVO_, 'userController.userLoginUsingPOST', Config>;
-      /**
-       * ---
-       *
        * [POST] userLoginToken
        *
        * **path:** /api/user/login/token
@@ -6095,6 +6211,9 @@ declare global {
        * **RequestBody**
        * ```ts
        * type RequestBody = {
+       *   deviceId?: string
+       *   deviceType?: string
+       *   platform?: string
        *   userAccount?: string
        *   userPassword?: string
        * }
@@ -6327,6 +6446,160 @@ declare global {
         config: Config
       ): Alova2Method<BaseResponse_boolean_, 'userController.updateMyUserUsingPOST', Config>;
     };
+    userConfigController: {
+      /**
+       * ---
+       *
+       * [GET] getCurrentUserConfig
+       *
+       * **path:** /api/user_config/get
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   // [title] UserConfigVO
+       *   data?: {
+       *     privateConfig?: object
+       *     publicConfig?: object
+       *   }
+       *   message?: string
+       * }
+       * ```
+       */
+      getCurrentUserConfigUsingGET<Config extends Alova2MethodConfig<BaseResponse_UserConfigVO_>>(
+        config?: Config
+      ): Alova2Method<BaseResponse_UserConfigVO_, 'userConfigController.getCurrentUserConfigUsingGET', Config>;
+      /**
+       * ---
+       *
+       * [GET] getPublicUserConfig
+       *
+       * **path:** /api/user_config/public
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // id
+       *   // [required]
+       *   id: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   // [title] UserConfigVO
+       *   data?: {
+       *     privateConfig?: object
+       *     publicConfig?: object
+       *   }
+       *   message?: string
+       * }
+       * ```
+       */
+      getPublicUserConfigUsingGET<
+        Config extends Alova2MethodConfig<BaseResponse_UserConfigVO_> & {
+          params: {
+            /**
+             * id
+             * [required]
+             */
+            id: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<BaseResponse_UserConfigVO_, 'userConfigController.getPublicUserConfigUsingGET', Config>;
+      /**
+       * ---
+       *
+       * [GET] selectOne
+       *
+       * **path:** /api/user_config/select
+       *
+       * ---
+       *
+       * **Query Parameters**
+       * ```ts
+       * type QueryParameters = {
+       *   // id
+       *   // [required]
+       *   id: number
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   // [title] UserConfigVO
+       *   data?: {
+       *     privateConfig?: object
+       *     publicConfig?: object
+       *   }
+       *   message?: string
+       * }
+       * ```
+       */
+      selectOneUsingGET_11<
+        Config extends Alova2MethodConfig<BaseResponse_UserConfigVO_> & {
+          params: {
+            /**
+             * id
+             * [required]
+             */
+            id: number;
+          };
+        }
+      >(
+        config: Config
+      ): Alova2Method<BaseResponse_UserConfigVO_, 'userConfigController.selectOneUsingGET_11', Config>;
+      /**
+       * ---
+       *
+       * [POST] updateCurrentUserConfig
+       *
+       * **path:** /api/user_config/update
+       *
+       * ---
+       *
+       * **RequestBody**
+       * ```ts
+       * type RequestBody = {
+       *   privateConfig?: object
+       *   publicConfig?: object
+       * }
+       * ```
+       *
+       * ---
+       *
+       * **Response**
+       * ```ts
+       * type Response = {
+       *   code?: number
+       *   data?: boolean
+       *   message?: string
+       * }
+       * ```
+       */
+      updateCurrentUserConfigUsingPOST<
+        Config extends Alova2MethodConfig<BaseResponse_boolean_> & {
+          data: UserConfigVO;
+        }
+      >(
+        config: Config
+      ): Alova2Method<BaseResponse_boolean_, 'userConfigController.updateCurrentUserConfigUsingPOST', Config>;
+    };
     wordStatusChangeController: {
       /**
        * ---
@@ -6497,7 +6770,7 @@ declare global {
        * }
        * ```
        */
-      selectOneUsingGET_11<
+      selectOneUsingGET_12<
         Config extends Alova2MethodConfig<WordStatusChange> & {
           params: {
             /**
@@ -6508,7 +6781,7 @@ declare global {
         }
       >(
         config: Config
-      ): Alova2Method<WordStatusChange, 'wordStatusChangeController.selectOneUsingGET_11', Config>;
+      ): Alova2Method<WordStatusChange, 'wordStatusChangeController.selectOneUsingGET_12', Config>;
     };
   }
 

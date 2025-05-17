@@ -32,6 +32,8 @@ export default {
   'categoryController.listCategoryByPageUsingPOST': ['POST', '/api/category/list/page'],
   'categoryController.selectOneUsingGET': ['GET', '/api/category/selectOne'],
   'categoryController.updateCategoryUsingPOST': ['POST', '/api/category/update'],
+  'cozeController.createChatUsingPOST': ['POST', '/api/coze/createChat'],
+  'cozeController.startWorkflowUsingPOST': ['POST', '/api/coze/startWorkflow'],
   'dictionaryCategoryController.getDictionaryCategoryByDictionaryIdUsingGET': [
     'GET',
     '/api/dictionary_category/relative'
@@ -122,20 +124,24 @@ export default {
   'postThumbController.doThumbUsingPOST': ['POST', '/api/post_thumb/'],
   'wxMpController.setMenuUsingGET': ['GET', '/api/setMenu'],
   'userController.addUserUsingPOST': ['POST', '/api/user/add'],
+  'userController.getDailyQuoteUsingGET': ['GET', '/api/user/dailyquote'],
   'userController.deleteUserUsingPOST': ['POST', '/api/user/delete'],
   'userController.getUserByIdUsingGET': ['GET', '/api/user/get'],
   'userController.getLoginUserUsingGET': ['GET', '/api/user/get/login'],
   'userController.getUserVOByIdUsingGET': ['GET', '/api/user/get/vo'],
   'userController.listUserByPageUsingPOST': ['POST', '/api/user/list/page'],
   'userController.listUserVOByPageUsingPOST': ['POST', '/api/user/list/page/vo'],
-  'userController.userLoginUsingPOST': ['POST', '/api/user/login'],
   'userController.userLoginTokenUsingPOST': ['POST', '/api/user/login/token'],
   'userController.userLoginByWxOpenUsingGET': ['GET', '/api/user/login/wx_open'],
   'userController.userLogoutUsingPOST': ['POST', '/api/user/logout'],
   'userController.userRegisterUsingPOST': ['POST', '/api/user/register'],
   'userController.updateUserUsingPOST': ['POST', '/api/user/update'],
   'userController.updateMyUserUsingPOST': ['POST', '/api/user/update/my'],
+  'userConfigController.getCurrentUserConfigUsingGET': ['GET', '/api/user_config/get'],
+  'userConfigController.getPublicUserConfigUsingGET': ['GET', '/api/user_config/public'],
+  'userConfigController.selectOneUsingGET_11': ['GET', '/api/user_config/select'],
+  'userConfigController.updateCurrentUserConfigUsingPOST': ['POST', '/api/user_config/update'],
   'wordStatusChangeController.listStatusChangeByPageUsingPOST': ['POST', '/api/word_status_change/list/page'],
   'wordStatusChangeController.listRecordUsingGET': ['GET', '/api/word_status_change/list/record'],
-  'wordStatusChangeController.selectOneUsingGET_11': ['GET', '/api/word_status_change/selectOne']
+  'wordStatusChangeController.selectOneUsingGET_12': ['GET', '/api/word_status_change/selectOne']
 };
